@@ -132,5 +132,5 @@ def main():
         password_to_clipboard(password)
 
     except Exception as e:
-        print(e.message)
+        print(str(e))
         exit(1)
