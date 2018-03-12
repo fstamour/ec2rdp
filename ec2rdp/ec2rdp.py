@@ -3,6 +3,7 @@
 import os
 import argparse
 import getpass
+import base64
 from configparser import ConfigParser
 
 import boto3
@@ -43,7 +44,7 @@ def decrypt_password_data(key_file, key_password, password_data):
             key_data = RSA.importKey(f.read(), key_password)
 
         cipher = PKCS1_v1_5.new(key_data)
-        password = cipher.decrypt(password_data.decode('base64'), None)
+        password = cipher.decrypt(base64.b64decode(password_data), None)
         return password
     except Exception:
         raise Exception('Error decrypting instance password.')

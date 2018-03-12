@@ -1,3 +1,4 @@
+import base64
 import pytest
 from mock import mock_open, MagicMock
 
@@ -57,8 +58,9 @@ def test_get_ec2_data(mocker, instance_id, exception):
         with pytest.raises(Exception):
             ec2rdp.ec2rdp.get_ec2_data(instance_id)
 
+
 @pytest.mark.parametrize('key_file, key_password, password_data, exception', [
-    pytest.param('/key.file', 'password', 'Hello World!'.encode('base64'), None),
+    pytest.param('/key.file', 'password', base64.b64encode('Hello World!'), None),
     pytest.param(None, None, None, IOError())
 ])
 def test_decrypt_password_data(mocker, key_file, key_password, password_data, exception):
