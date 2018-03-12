@@ -8,7 +8,7 @@ import ec2rdp.ec2rdp
 @pytest.mark.parametrize('key_path, config_val, profile_name, exception', [
     pytest.param('/key.file', None, None, None),
     pytest.param(None, 'config_val', 'profile', None),
-    pytest.param(None, None, None, IOError())
+    pytest.param(None, None, None, RuntimeError('Test trigged exception'))
 ])
 def test_get_key_location(mocker, key_path, config_val, profile_name, exception):
 
@@ -34,7 +34,7 @@ def test_get_key_location(mocker, key_path, config_val, profile_name, exception)
 
 @pytest.mark.parametrize('instance_id, exception',[
     pytest.param('Hello World!', None),
-    pytest.param(None, IOError())
+    pytest.param(None, RuntimeError('Test trigged exception'))
 ])
 def test_get_ec2_data(mocker, instance_id, exception):
 
@@ -61,7 +61,7 @@ def test_get_ec2_data(mocker, instance_id, exception):
 
 @pytest.mark.parametrize('key_file, key_password, password_data, exception', [
     pytest.param('/key.file', 'password', base64.b64encode(bytes('Hello World!'.encode('utf-8'))), None),
-    pytest.param(None, None, None, IOError())
+    pytest.param(None, None, None, RuntimeError('Test trigged exception'))
 ])
 def test_decrypt_password_data(mocker, key_file, key_password, password_data, exception):
 
@@ -92,7 +92,7 @@ def test_decrypt_password_data(mocker, key_file, key_password, password_data, ex
 @pytest.mark.parametrize('output, instance_id, exception', [
     pytest.param('/file.path', '1', None),
     pytest.param(None, '1', None),
-    pytest.param(None, None, IOError())
+    pytest.param(None, None, RuntimeError('Test trigged exception'))
 ])
 def test_get_output(mocker, output, instance_id, exception):
 
@@ -114,7 +114,7 @@ def test_get_output(mocker, output, instance_id, exception):
 
 @pytest.mark.parametrize('output, dns_name, exception',[
     pytest.param('/file.out', 'test.dns.name', None),
-    pytest.param(None, None, IOError())
+    pytest.param(None, None, RuntimeError('Test trigged exception'))
 ])
 def test_write_rdp(mocker, output, dns_name, exception):
 
@@ -140,7 +140,7 @@ def test_write_rdp(mocker, output, dns_name, exception):
 
 @pytest.mark.parametrize('password, exception', [
     pytest.param('password', None),
-    pytest.param(None, IOError())
+    pytest.param(None, RuntimeError('Test trigged exception'))
 ])
 def test_password_to_clipboard(mocker, password, exception):
     mock_pyperclip = mocker.patch('ec2rdp.ec2rdp.pyperclip.copy')
@@ -181,7 +181,7 @@ pytest.param({
         'aws_access_key_id': None,
         'aws_secret_access_key': None,
         'quick': False
-    }, IOError())
+    }, RuntimeError('Test trigged exception'))
 ])
 def test_main(mocker, args, exception):
 
