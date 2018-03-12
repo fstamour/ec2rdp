@@ -60,7 +60,7 @@ def test_get_ec2_data(mocker, instance_id, exception):
 
 
 @pytest.mark.parametrize('key_file, key_password, password_data, exception', [
-    pytest.param('/key.file', 'password', base64.b64encode('Hello World!'), None),
+    pytest.param('/key.file', 'password', base64.b64encode(bytes('Hello World!')), None),
     pytest.param(None, None, None, IOError())
 ])
 def test_decrypt_password_data(mocker, key_file, key_password, password_data, exception):
