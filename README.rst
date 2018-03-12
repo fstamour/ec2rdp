@@ -2,7 +2,7 @@
 EC2RDP
 ------
 
-.. image:: https://travis-ci.org/jtvsoftwares/ec2rdp.svg?branch=masterrs
+.. image:: https://travis-ci.org/jtvsoftwares/ec2rdp.svg?branch=master
     :target: https://travis-ci.org/jtvsoftwares/ec2rdp
 
 .. image:: https://coveralls.io/repos/github/jtvsoftwares/ec2rdp/badge.svg?branch=master

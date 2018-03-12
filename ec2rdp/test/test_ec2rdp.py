@@ -100,6 +100,7 @@ def test_get_output(mocker, output, instance_id, exception):
 
     mock_os = mocker.patch('ec2rdp.ec2rdp.os')
     mock_os.path.join.return_value = '/{}.rdp'.format(instance_id)
+    mock_os.path.exists.return_value = True if output else False
     mock_os.path.dirname.return_value = '/'
     mock_os.path.expanduser.return_value = expected
     mock_os.path.expanduser.side_effect = exception

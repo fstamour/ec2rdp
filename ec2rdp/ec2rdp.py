@@ -56,7 +56,8 @@ def get_output(output, instance_id):
             output = os.path.join(os.getcwd(), '{}.rdp'.format(instance_id))
 
         output = os.path.expanduser(output)
-        os.makedirs(os.path.dirname(output), exist_ok=True)
+        if not os.path.exists(os.path.dirname(output)):
+            os.makedirs(os.path.dirname(output))
         return output
     except Exception:
         raise Exception('Error trying to get output directory.')
@@ -94,7 +95,7 @@ def main():
     parser.add_argument('-k', '--key', help='The path to the private key file to decrypt the password.',
                         action='store', type=str, default=None)
     parser.add_argument('-q', '--quick', help='The script will not ask for the passphrase for the key file.',
-                        action='store_false', default=True)
+                        action='store_true', default=False)
 
     parser.add_argument('--aws-profile', help='The profile name for aws credentials',
                         action='store', type=str, default=None)
@@ -104,7 +105,7 @@ def main():
                         action='store', type=str, default=None)
     parser.add_argument('--aws-region', help='The region for aws',
                         action='store', type=str, default=None)
-    parser.add_argument('instance-id', help='The instance-id to decrypt the password.',
+    parser.add_argument('instance_id', help='The instance-id to decrypt the password.',
                         action='store', type=str, default=None)
 
     args = parser.parse_args()
@@ -130,6 +131,8 @@ def main():
         password = decrypt_password_data(key_path, key_password, password_data)
         write_rdp(output, dns_name)
         password_to_clipboard(password)
+        print('RDP file written to: {}'.format(output))
+        print('Password copied to clipboard')
 
     except Exception as e:
         print(str(e))
