@@ -2,6 +2,9 @@
 EC2RDP
 ------
 
+.. image:: https://travis-ci.org/jtvsoftwares/ec2rdp.svg?branch=masterrs
+    :target: https://travis-ci.org/jtvsoftwares/ec2rdp
+
 Summary
 -------
 Simple command line utility to decrypt the password of an
