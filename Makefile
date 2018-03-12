@@ -20,7 +20,7 @@ install: build
 
 deploy: build
 
-test: local pytest clean
+test: install pytest clean
 
 uninstall:
 	-pip uninstall -y ec2rdp
