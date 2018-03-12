@@ -11,6 +11,8 @@ with open(os.path.join(base_dir, 'README.rst')) as f:
     long_description = str(f.read())
 
 requirements = [
+    'future',
+    'configparser',
     'boto3',
     'pycrypto',
     'pyperclip'
@@ -27,6 +29,12 @@ setup(
     scripts=['bin/ec2rdp'],
     install_requires=requirements,
     classifiers=[
-         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: OS Independent',
+        'Topic :: Utilities',
+        'Development Status :: 4 - Beta'
     ]
 )

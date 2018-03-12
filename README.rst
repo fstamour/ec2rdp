@@ -6,8 +6,12 @@ EC2RDP
     :target: https://travis-ci.org/jtvsoftwares/ec2rdp
 
 .. image:: https://coveralls.io/repos/github/jtvsoftwares/ec2rdp/badge.svg?branch=master
-:target: https://coveralls.io/github/jtvsoftwares/ec2rdp?branch=master
+    :target: https://coveralls.io/github/jtvsoftwares/ec2rdp?branch=master
 
+.. image:: https://img.shields.io/badge/license-MIT-blue.svg
+    :target: https://opensource.org/licenses/MIT
+
+.. image:: https://img.shields.io/badge/python-2.7%2C%203.5%2C%203.6-blue.svg
 
 Summary
 -------

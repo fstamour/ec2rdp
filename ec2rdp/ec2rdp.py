@@ -3,7 +3,7 @@
 import os
 import argparse
 import getpass
-from ConfigParser import ConfigParser
+from configparser import ConfigParser
 
 import boto3
 from Crypto.Cipher import PKCS1_v1_5

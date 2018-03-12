@@ -20,20 +20,19 @@ install: build
 
 deploy: build
 
-test: install pytest clean
+test: install
+	pip install pytest pytest-mock coverage
+	coverage run --source ec2rdp --omit=*test* --branch -m pytest ec2rdp/test
+	coverage html --fail-under=100
 
 uninstall:
 	-pip uninstall -y ec2rdp
 
 clean: uninstall
 	-find . -type f -name *.pyc -delete
+	-rm -rf .pytest_cache
 	-rm -rf ec2rdp.egg-info
 	-rm -rf build
 	-rm -rf dist
 	-rm -rf htmlcov
 	-rm -rf .coverage
-
-pytest:
-	pip install pytest pytest-mock coverage
-	coverage run --source ec2rdp --omit=*test* --branch -m pytest ec2rdp/test
-	coverage html --fail-under=100
