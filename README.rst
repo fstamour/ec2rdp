@@ -49,18 +49,10 @@ AWS Credentials
 ---------------
 The script will look for credentials to AWS in the following locations:
 
-- ``AWS_PROFILE`` environment variable with credentials set in either ``~/.aws/credentials`` or ``~/.aws/config``.
-When using this, ``--aws-region`` must be set, ``~/.aws/config`` must contain a region value for the profile or
-``AWS_DEFAULT_REGION`` must be set.
-
-- ``AWS_ACCESS_KEY_ID``, ``AWS_SECRET_ACCESS_KEY`` environment variables. When using this, ``--aws-region`` must be set
-or ``AWS_DEFAULT_REGION`` must be set.
-
-- ``--aws-profile`` command line option. When using this, ``--aws-region`` must be set, ``~/.aws/config`` must contain
-a region value for the profile or ``AWS_DEFAULT_REGION`` must be set.
-
-- ``--aws-access-key-id``, ``--aws-secret-access-key`` command line options. When using this, ``--aws-region`` must be
-set or ``AWS_DEFAULT_REGION`` must be set.
+- ``AWS_PROFILE`` environment variable with credentials set in either ``~/.aws/credentials`` or ``~/.aws/config``. When using this, ``--aws-region`` must be set, ``~/.aws/config`` must contain a region value for the profile or ``AWS_DEFAULT_REGION`` must be set.
+- ``AWS_ACCESS_KEY_ID``, ``AWS_SECRET_ACCESS_KEY`` environment variables. When using this, ``--aws-region`` must be set or ``AWS_DEFAULT_REGION`` must be set.
+- ``--aws-profile`` command line option. When using this, ``--aws-region`` must be set, ``~/.aws/config`` must contain a region value for the profile or ``AWS_DEFAULT_REGION`` must be set.
+- ``--aws-access-key-id``, ``--aws-secret-access-key`` command line options. When using this, ``--aws-region`` must be set or ``AWS_DEFAULT_REGION`` must be set.
 
 Key in AWS Config file
 ----------------------
