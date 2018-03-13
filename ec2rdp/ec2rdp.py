@@ -14,15 +14,19 @@ import pyperclip
 
 def get_key_location(key_path):
     try:
+        if key_path:
+            return key_path
+
         profile_name = os.environ.get('AWS_PROFILE', None)
         profile_name = 'profile {}'.format(profile_name) if profile_name else 'default'
         config_vars = {'ec2rdp_key': key_path} if key_path else {}
 
         config_path = os.path.expanduser('~/.aws/config')
+
         config_parser = ConfigParser()
         config_parser.read(config_path)
 
-        config_key = config_parser.get(profile_name, 'ec2rdp_key', vars=config_vars)
+        config_key = config_parser.get(profile_name, 'ec2rdp_key')
         return config_key
     except Exception:
         raise Exception('Cannot find a key to decrypt password')

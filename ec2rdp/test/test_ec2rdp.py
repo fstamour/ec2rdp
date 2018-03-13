@@ -19,7 +19,7 @@ def test_get_key_location(mocker, key_path, config_val, profile_name, exception)
     mock_os.path.expanduser.return_value = 'aws/config'
 
     mock_parser = MagicMock()
-    mock_parser.get.return_value = expected
+    mock_parser.get.return_value = config_val
     mock_parser.get.side_effect = exception
     mock_parser_init = mocker.patch('ec2rdp.ec2rdp.ConfigParser')
     mock_parser_init.return_value = mock_parser
