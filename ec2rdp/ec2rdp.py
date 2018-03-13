@@ -21,10 +21,12 @@ def get_key_location(key_path):
         config_path = os.path.expanduser('~/.aws/config')
         config_parser = ConfigParser()
         config_parser.read(config_path)
-
-        config_key = config_parser.get(profile_name, 'ec2rdp_key', vars=config_vars)
+        config_key = config_parser.get(profile_name, 'ec2rdp_key')
         return config_key
     except Exception:
+        if key_path:
+            return key_path
+
         raise Exception('Cannot find a key to decrypt password')
 
 
