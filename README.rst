@@ -11,7 +11,13 @@ EC2RDP
 .. image:: https://img.shields.io/badge/license-MIT-blue.svg
     :target: https://opensource.org/licenses/MIT
 
-.. image:: https://img.shields.io/badge/python-2.7%2C%203.5%2C%203.6-blue.svg
+.. image:: https://img.shields.io/badge/python-2.7-blue.svg
+    :target: https://github.com/jtvsoftwares/ec2rdp
+
+.. image:: https://img.shields.io/badge/python-3.5-blue.svg
+    :target: https://github.com/jtvsoftwares/ec2rdp
+
+.. image:: https://img.shields.io/badge/python-3.6-blue.svg
     :target: https://github.com/jtvsoftwares/ec2rdp
 
 Summary
