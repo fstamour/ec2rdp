@@ -10,7 +10,7 @@ all: build install test deploy
 local:
 	pip install -e .
 
-build: $(BDIST_DEP)
+build: $(BDIST_DEP) readme
 $(BDIST_DEP):
 	python setup.py bdist_wheel --universal
 	-rm -rf build
@@ -36,3 +36,8 @@ clean: uninstall
 	-rm -rf dist
 	-rm -rf htmlcov
 	-rm -rf .coverage
+	-rm -rf README.html
+
+README.html: README.rst
+readme: README.html
+	rst2html.py README.rst README.html

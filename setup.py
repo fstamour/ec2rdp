@@ -20,11 +20,12 @@ requirements = [
 
 setup(
     name='ec2rdp',
-    description='Automatically populate rdp file from ec2 instance and put the password in the clipboard',
+    description='Command line tool to quickly access AWS EC2 Windows instance through rdp.',
     long_description=long_description,
     version=version,
     author='JTV Softwares',
     author_email='jtvsoftwares@gmail.com',
+    license='MIT',
     packages=find_packages(),
     scripts=['bin/ec2rdp'],
     install_requires=requirements,
@@ -35,6 +36,6 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Topic :: Utilities',
-        'Development Status :: 4 - Beta'
+        'Development Status :: 5 - Production/Stable'
     ]
 )

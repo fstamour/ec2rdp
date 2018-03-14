@@ -2,22 +2,19 @@
 EC2RDP
 ------
 
+.. image:: https://img.shields.io/pypi/v/ec2rdp.svg
+    :target: https://pypi.python.org/pypi/ec2rdp
+
 .. image:: https://travis-ci.org/jtvsoftwares/ec2rdp.svg?branch=master
     :target: https://travis-ci.org/jtvsoftwares/ec2rdp
 
 .. image:: https://coveralls.io/repos/github/jtvsoftwares/ec2rdp/badge.svg?branch=master
     :target: https://coveralls.io/github/jtvsoftwares/ec2rdp?branch=master
 
-.. image:: https://img.shields.io/badge/license-MIT-blue.svg
-    :target: https://opensource.org/licenses/MIT
+.. image:: https://img.shields.io/pypi/l/ec2rdp.svg
+    :target: https://github.com/jtvsoftwares/ec2rdp/blob/master/LICENSE
 
-.. image:: https://img.shields.io/badge/python-2.7-blue.svg
-    :target: https://github.com/jtvsoftwares/ec2rdp
-
-.. image:: https://img.shields.io/badge/python-3.5-blue.svg
-    :target: https://github.com/jtvsoftwares/ec2rdp
-
-.. image:: https://img.shields.io/badge/python-3.6-blue.svg
+.. image:: https://img.shields.io/pypi/pyversions/ec2rdp.svg
     :target: https://github.com/jtvsoftwares/ec2rdp
 
 Summary
