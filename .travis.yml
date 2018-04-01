@@ -41,7 +41,6 @@ script:
 jobs:
   include:
   - stage: Deploy
-    os: linux
     python: '3.6'
     script: skip
     deploy:
