@@ -5,20 +5,20 @@ python:
   - '3.5'
   - '3.6'
 
-matrix:
-  include:
-  - os: osx
-    language: generic
-    env:
-    - JTV_PY_VER="2.7.14"
-  - os: osx
-    language: generic
-    env:
-    - JTV_PY_VER="3.5.5"
-  - os: osx
-    language: generic
-    env:
-    - JTV_PY_VER="3.6.5"
+# matrix:
+#   include:
+#   - os: osx
+#     language: generic
+#     env:
+#     - JTV_PY_VER="2.7.14"
+#   - os: osx
+#     language: generic
+#     env:
+#     - JTV_PY_VER="3.5.5"
+#   - os: osx
+#     language: generic
+#     env:
+#     - JTV_PY_VER="3.6.5"
 
 branches:
   only:
@@ -39,7 +39,19 @@ script:
 
 jobs:
   include:
-  - stage: Deploy
+  - stage: test
+    os: osx
+    language: generic
+    env: JTV_PY_VER="2.7.14"
+  - stage: test
+    os: osx
+    language: generic
+    env: JTV_PY_VER="3.5.5"
+  - stage: test
+    os: osx
+    language: generic
+    env: JTV_PY_VER="3.6.5"
+  - stage: deploy
     python: '3.6'
     script: skip
     deploy:
