@@ -7,7 +7,7 @@ BDIST_DEP=dist/ec2rdp-$(VERSION)-py2.py3-none-any.whl
 all: required readme dist install test
 
 required:
-	pip install --upgrade -r requirements/make.pip
+	pip install --upgrade -r requirements/make.txt
 
 README.html: required README.rst
 readme: README.html
