@@ -10,6 +10,9 @@ with open(os.path.join(base_dir, 'version.txt')) as f:
 with open(os.path.join(base_dir, 'README.rst')) as f:
     long_description = str(f.read())
 
+with open(os.path.join(base_dir, 'requirements', 'setup.pip')) as f:
+    requirements = f.read().splitlines()
+
 requirements = [
     'future',
     'configparser',
