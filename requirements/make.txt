@@ -1,0 +1,6 @@
+mock
+pytest
+pytest-mock
+coverage
+coveralls
+docutils

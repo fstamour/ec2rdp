@@ -10,13 +10,8 @@ with open(os.path.join(base_dir, 'version.txt')) as f:
 with open(os.path.join(base_dir, 'README.rst')) as f:
     long_description = str(f.read())
 
-requirements = [
-    'future',
-    'configparser',
-    'boto3',
-    'pycrypto',
-    'pyperclip'
-]
+with open(os.path.join(base_dir, 'requirements', 'setup.txt')) as f:
+    requirements = f.read().splitlines()
 
 setup(
     name='ec2rdp',

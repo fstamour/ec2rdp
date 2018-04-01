@@ -1,3 +1,4 @@
+os: linux
 language: python
 python:
 - '2.7'
@@ -7,24 +8,42 @@ branches:
   only:
   - master
   - dev
-os:
-- linux
+before_install:
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew upgrade pyenv; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then pyenv install $JTV_PYTHON; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then virtualenv venv -p /Users/travis/.pyenv/versions/$JTV_PYTHON/bin/python; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then source venv/bin/activate; fi
 install:
-- pip install coveralls
+- pip install --upgrade -r requirements/travis.txt
 script:
 - make test
 - coveralls
-
 jobs:
   include:
-  - stage: Deploy
+  - stage: test
+    os: osx
+    language: generic
+    python: '2.7'
+    env: JTV_PYTHON="2.7.14"
+  - stage: test
+    os: osx
+    language: generic
+    python: '3.5'
+    env: JTV_PYTHON="3.5.5"
+  - stage: test
+    os: osx
+    language: generic
+    python: '3.6'
+    env: JTV_PYTHON="3.6.5"
+  - stage: deploy
     python: '3.6'
     script: skip
     deploy:
       provider: pypi
-      user: jtvsoftwares
-      distributions: 'bdist_wheel --universal'
+      user: jtvsoftwares_travis-ci
+      distributions: bdist_wheel --universal
       on:
         branch: master
       password:
-        secure: sJdREfTuNbFcmNrPExpSatOUd8a3p9heC9ipJPEXRjVG88J0O9Pvl335m8ZnKU4YtdeAIyiselG6RK+e4QoEegTwKX1QCedFRpxxUYMnolIQ1TC1nyDx7XmFyRQD2NabfjFbV16pBIDgdou4JHj4rutX9uKIdh7T18JycQPyMF+6++M1vwJ3/mFx5pZB+klzl4p61WQ1sBeMpADWMg7hD8C9URcSLbjthrGglSXyMKZK0mkiR1Ehdth9pPx2Ylz54YQ7LHHdJveDI0hMSfl5u8JvTYGuHKaZU9M0/rl72VLtuOApm7HMlcFl1dv6bQfLZxutE79ugZvj2+t2htka41fArwPuoYeFVjdqWlQwVmS+udiy3JoHTSBaF9kUaDsUkjdehITjRmgy9YQ3WYL8+tOqZxkPyjVHTBlFjHanecSegT5YtjpwGacbX5fT8bpteUABr045sPzM2JPrHQrbiOIVrFvcV0peoFXXdZTKfpInxskynQKli+6vcGqEOvC6Y6mJcmi3rQHSll7n0lcZmSnwhuzujGHSYSvjPiIoEHEHQuhlP0Iz2rMK/e81eWUn8hcLUf+xGXFbgzQgDguwTvsR0Ztb/Si3yijdEMBCXkZRlgVWZDScEZVcvdXIF9m+cU513UdF1eCFKeUmgLfAZa9pwrzN/EitG2je9fxooq0=
+        secure: u+N2dJpUmGzs+pVTY2qnVo2vC3X8PC32YcMIP3ga0GRc2qDjyfvT91oJVGIHGDgbfuzyfk8iiWWbqtPZc29+MsWmqV953AssvicsS8ljG5Ixk+RHYqaRGIeHTabJZMhy2jqFGrRprgVYc7j83fz2kkqelVuRc87CVhx1TsTVod5DCs6Nd4K7qrU2N3sMisvre85idKoHH9a8LafN14adj0vgMcae594LLoAopSP8dJ8Giaal+eaXeLEnGBblcXd6Qb5Mo9vDA5IBSIa04Dqr9qis0DqC+roY/Vsg0lWizP2/4wFVNKO1SrzstHSbsOFteeVuEAmYM/EVvYD/VJAKAa923Drv/7xfD707VxAnOZ19PFEKJMvXO138Hp97QduK2dpjv5nS0oT5uFz2zn+Xl48iulrRNcPXnZV5j/oM7atr5DFd9PFtzCIUVdV4q2+UXq2BehUrAV44RpfOYfJAgp+vt5tV4FtVpXhAwMoSQur84sqnOKJQ6Uphi9rt7Hmh0fjEni8VhKgjOfV4h9gjY+3snxqKUKtoKcpPZ2/eoeDorbw0PHdX21Ceb57gz0wrLhl4ebojuiVVHv73/2Wn1OX2RyMHqN/dL1Ra+HuO17Loisi/ygxo591ZQkihIipuWu5bH6o7GLh+KMKKh6+IRlJG0myuuyS3fPU0WGBOgaQ=
