@@ -3,3 +3,4 @@ configparser
 boto3
 pycryptodome
 pyperclip
+open-python

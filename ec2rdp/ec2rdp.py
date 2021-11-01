@@ -1,70 +1,71 @@
 
 
-import os
 import argparse
-import getpass
 import base64
+import getpass
+import os
 from configparser import ConfigParser
 
 import boto3
+import open_python
+import pyperclip
 from Crypto.Cipher import PKCS1_v1_5
 from Crypto.PublicKey import RSA
-import pyperclip
 
 
 def get_key_location(key_path):
-    try:
-        if key_path:
-            return key_path
+    if key_path:
+        return key_path
 
-        profile_name = os.environ.get('AWS_PROFILE', None)
-        profile_name = 'profile {}'.format(profile_name) if profile_name else 'default'
-        config_vars = {'ec2rdp_key': key_path} if key_path else {}
+    if key_path is None:
+        return None
 
-        config_path = os.path.expanduser('~/.aws/config')
+    profile_name = os.environ.get('AWS_PROFILE', None)
+    profile_name = 'profile {}'.format(profile_name) if profile_name else 'default'
+    config_vars = {'ec2rdp_key': key_path} if key_path else {}
 
-        config_parser = ConfigParser()
-        config_parser.read(config_path)
+    config_path = os.path.expanduser('~/.aws/config')
 
+    config_parser = ConfigParser()
+    config_parser.read(config_path)
+    
+    if config_parser.has_option(profile_name, 'ec2rdp_key'):
         config_key = config_parser.get(profile_name, 'ec2rdp_key')
         return config_key
-    except Exception:
-        raise Exception('Cannot find a key to decrypt password')
+    return None
 
 
 def get_ec2_data(instance_id):
-    try:
-        instance = boto3.resource('ec2').Instance(instance_id)
-        dns_name = instance.public_dns_name
-        password_data = instance.password_data()['PasswordData']
-        return dns_name, password_data.strip()
-    except Exception:
-        raise Exception('Unable to contact to instance {}'.format(instance_id))
+    instance = boto3.resource('ec2').Instance(instance_id)
+    dns_name = instance.public_dns_name
+    password_data = instance.password_data()['PasswordData']
+    return dns_name, password_data.strip()
 
 
 def decrypt_password_data(key_file, key_password, password_data):
-    try:
-        with open(os.path.expanduser(key_file)) as f:
-            key_data = RSA.importKey(f.read(), key_password)
+    with open(os.path.expanduser(key_file)) as f:
+        key_data = RSA.importKey(f.read(), key_password)
 
-        cipher = PKCS1_v1_5.new(key_data)
-        password = cipher.decrypt(base64.b64decode(password_data), None)
-        return password
-    except Exception:
-        raise Exception('Error decrypting instance password.')
+    cipher = PKCS1_v1_5.new(key_data)
+    password = cipher.decrypt(base64.b64decode(password_data), None)
+    return password.decode()
 
 
 def get_output(output, instance_id):
-    try:
-        if not output:
-            output = os.path.join(os.getcwd(), '{}.rdp'.format(instance_id))
+    """Get the output file name
 
-        output = os.path.expanduser(output)
-        if not os.path.exists(os.path.dirname(output)):
-            os.makedirs(os.path.dirname(output))
-        return output
-    except Exception:
-        raise Exception('Error trying to get output directory.')
+    Args:
+        output (string): the path to the output file
+        instance_id (string): the Id of the EC2 instance
+
+    Returns:
+        output: the path 
+    """
+    if not output:
+        output = os.path.join(os.getcwd(), '{}.rdp'.format(instance_id))
+
+    output = os.path.expanduser(output)
+    return output
 
 
 def write_rdp(output, dns_name):
@@ -77,18 +78,12 @@ def write_rdp(output, dns_name):
         'prompt for credentials on client:i:1\n'
     ]
 
-    try:
-        with open(output, 'w') as f:
-            f.writelines(content)
-    except Exception:
-        raise Exception('Error writing rdp file.')
+    with open(output, 'w') as f:
+        f.writelines(content)
 
 
 def password_to_clipboard(password):
-    try:
-        pyperclip.copy(password)
-    except Exception:
-        raise Exception('Error copying password to clipboard.')
+    pyperclip.copy(password)
 
 
 def main():
@@ -124,20 +119,24 @@ def main():
         os.environ['AWS_ACCESS_KEY_ID'] = args.aws_access_key_id
         os.environ['AWS_SECRET_ACCESS_KEY'] = args.aws_secret_access_key
 
-    try:
-        output = get_output(args.output, args.instance_id)
-        dns_name, password_data = get_ec2_data(args.instance_id)
+
+    output = get_output(args.output, args.instance_id)
+    # make sure the output directory exits
+    if not os.path.exists(os.path.dirname(output)):
+        os.makedirs(os.path.dirname(output))
+
+    dns_name, password_data = get_ec2_data(args.instance_id)
+    if args.key is not None:
         key_path = get_key_location(args.key)
 
         key_password = getpass.getpass('Password for key file {} (leave blank if none):'.format(key_path)) \
             if not args.quick else ''
-
+            
         password = decrypt_password_data(key_path, key_password, password_data)
-        write_rdp(output, dns_name)
         password_to_clipboard(password)
-        print('RDP file written to: {}'.format(output))
         print('Password copied to clipboard')
 
-    except Exception as e:
-        print(str(e))
-        exit(1)
+    write_rdp(output, dns_name)
+    print('RDP file written to: {}'.format(output))
+    open_python.start(output)
+
