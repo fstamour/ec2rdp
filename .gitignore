@@ -106,3 +106,6 @@ ENV/
 
 # README rendered html
 README.html
+
+# RDP files created when testing manually
+*.rdp
