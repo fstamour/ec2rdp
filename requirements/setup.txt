@@ -1,5 +1,5 @@
 future
 configparser
 boto3
-pycrypto
+pycryptodome
 pyperclip

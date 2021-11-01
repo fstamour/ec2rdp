@@ -1,6 +1,6 @@
 import os
-from setuptools import setup, find_packages
 
+from setuptools import find_packages, setup
 
 base_dir = os.path.dirname(__file__)
 
@@ -22,7 +22,11 @@ setup(
     author_email='jtvsoftwares@gmail.com',
     license='MIT',
     packages=find_packages(),
-    scripts=['bin/ec2rdp'],
+    entry_points={
+        'console_scripts': [
+            'ec2rdp = ec2rdp.ec2rdp:main'
+        ],
+    },
     install_requires=requirements,
     classifiers=[
         'Programming Language :: Python :: 2.7',
